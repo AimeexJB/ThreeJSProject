@@ -84,23 +84,6 @@ function render() {
 
 	var intersects = raycaster.intersectObjects( scene.children );
 
- // 	if ( intersects.length > 0 ) {
-
-	// 	var object = intersects[ 0 ].object;
-
-	// 	if ( INTERSECTED !== object ) {
-
-	// 		INTERSECTED = object;
-	// 		INTERSECTED.material.color.set(0x7d00fd);
-
-	// 	}
-	// 	else if (INTERSECTED) {
-	// 		INTERSECTED.material.color.set(0xffffff);
-	// 		INTERSECTED = null;
-	// 	}
-
-	// }
-
 	if ( intersects.length > 0 )
 	{
 		// if the closest object intersected is not the currently stored intersection object
