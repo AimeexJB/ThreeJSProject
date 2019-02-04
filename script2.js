@@ -1,10 +1,11 @@
 var camera, scene, renderer, controls, raycaster;
-var cube;
-
-var objects;
-// var objects = [];
+var cube, container;
 
 var  mouse, INTERSECTED;
+
+//var objects;
+var objects = [];
+
 var loader = new THREE.TextureLoader();
 
 init();
@@ -30,8 +31,8 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 100);
 
 	//--------------------------Adding Audio--------------------------//
-	var listener = new THREE.AudioListener();
-	camera.add( listener );
+	// var listener = new THREE.AudioListener();
+	// camera.add( listener );
 
 	//--------------------------Adding Raycasting--------------------------//
 	raycaster = new THREE.Raycaster();
@@ -39,6 +40,7 @@ function init() {
 
 	//--------------------------Rendering the Scene--------------------------//
 	renderer = new THREE.WebGLRenderer();
+	renderer.setPixelRatio( window.devicePixelRatio)
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 
@@ -91,45 +93,50 @@ function init() {
 		cube.position.x = (Math.random()* 100) - 50;
 		cube.position.y = (Math.random()* 100) - 50;
 		scene.add( cube );
-		//	object.push( cube );
+		objects.push( cube );
 	}
 
 	//--------------------------Adding The lighting effects--------------------------//
 
-	// var light = new THREE.PointLight(0xffffff, 20, 100);
-	// light.position.set(30,0,0);
-	// scene.add(light);
+	var light = new THREE.PointLight(0xffffff, 20, 100);
+	light.position.set(30,0,0);
+	scene.add(light);
 
 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
 
 
-	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
 
 }
 
-function onDocumentMouseMove( event ) {
+function onDocumentTouchStart( event ) {
 
 	event.preventDefault();
 
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	event.clientX = event.touches[0].clientX;
+	event.clientY = event.touches[0].clientY;
+	onDocumentMouseDown( event );
 
 }
 
-function animate() {
+function onDocumentMouseDown( event ) {
 
-	requestAnimationFrame( animate );
+	event.preventDefault();
 
-	render();
-};
-
-function render() {
+	mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 
 	raycaster.setFromCamera( mouse, camera );
 
-	var intersects = raycaster.intersectObjects( scene.children );
+	var intersects = raycaster.intersectObjects( objects );
+
+	// if ( intersects.length > 0 ) {
+	// 	intersects[ 0 ].object.material.color.setHex( 0x7d00fd );
+	// }
 
 	if ( intersects.length > 0 )
 	{
@@ -156,6 +163,19 @@ function render() {
 		//     by setting current intersection object to "nothing"
 		INTERSECTED = null;
 	}
+
+}
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	render();
+};
+
+
+function render() {
 
 	renderer.render( scene, camera );
 
