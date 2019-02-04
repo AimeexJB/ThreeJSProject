@@ -1,7 +1,8 @@
 var camera, scene, renderer, controls, raycaster;
 var cube;
 
-var objects = [];
+var objects;
+// var objects = [];
 
 var  mouse, INTERSECTED;
 var loader = new THREE.TextureLoader();
@@ -48,28 +49,27 @@ function init() {
 	camera.position.z = 5;
 
 	//--------------------------Adding the Start Screen--------------------------//
-	var blocker = document.getElementById( 'blocker' );
-	var start = document.getElementById( 'start' );
-
-	start.addEventListener( 'click', function () {
-		controls.lock();
-	}, false );
-
-	controls.addEventListener( 'lock', function () {
-		start.style.display = 'none';
-		blocker.style.display = 'none';
-	} );
-
-	controls.addEventListener( 'unlock', function () {
-		blocker.style.display = 'block';
-		start.style.display = '';
-	} );
-
-	scene.add( controls.getObject() );
-
+	// var blocker = document.getElementById( 'blocker' );
+	// var start = document.getElementById( 'start' );
+	//
+	// start.addEventListener( 'click', function () {
+	// 	controls.lock();
+	// }, false );
+	//
+	// controls.addEventListener( 'lock', function () {
+	// 	start.style.display = 'none';
+	// 	blocker.style.display = 'none';
+	// } );
+	//
+	// controls.addEventListener( 'unlock', function () {
+	// 	blocker.style.display = 'block';
+	// 	start.style.display = '';
+	// } );
+	//
+	// scene.add( controls.getObject() );
 
 	//--------------------------Loading the Background Image--------------------------//
-	loader.load('public/tron3.jpg', function(texture){
+	loader.load('public/darkgrid.jpg', function(texture){
 		var cubeGeom = new THREE.BoxGeometry(90, 90, 90);
 		var cubeMat = new THREE.MeshBasicMaterial({
 			map: texture,
@@ -91,7 +91,7 @@ function init() {
 		cube.position.x = (Math.random()* 100) - 50;
 		cube.position.y = (Math.random()* 100) - 50;
 		scene.add( cube );
-		object.push(cube);
+		//	object.push( cube );
 	}
 
 	//--------------------------Adding The lighting effects--------------------------//
