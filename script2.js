@@ -1,9 +1,8 @@
 var camera, scene, renderer, controls, raycaster;
-var cube, container;
+var cube, container, selectedObject;
 
 var  mouse, INTERSECTED;
 
-//var objects;
 var objects = [];
 
 var loader = new THREE.TextureLoader();
@@ -29,10 +28,26 @@ function init() {
 	//--------------------------Creating Scene--------------------------//
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 100);
+	// camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 
 	//--------------------------Adding Audio--------------------------//
 	// var listener = new THREE.AudioListener();
 	// camera.add( listener );
+	//
+	// var sound = new THREE.Audio( listener );
+	//
+	// var audioLoader = new THREE.AudioLoader();
+	// 	audioLoader.load( 'music/song.mp3', function( buffer ) {
+	// 		sound.setBuffer( buffer );
+	// 		sound.play();
+	// 	});
+	//
+	// var sphere = new THREE.SphereGeometry( 0.5, 0.5, 0.5 );
+	// var material = new THREE.MeshPhongMaterial( { color: 0xff2200 } );
+	// var mesh = new THREE.Mesh( sphere, material );
+	// scene.add( mesh );
+
+	// mesh.add( sound );
 
 	//--------------------------Adding Raycasting--------------------------//
 	raycaster = new THREE.Raycaster();
@@ -48,7 +63,9 @@ function init() {
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	// controls = new THREE.FirstPersonControls( camera );
 
+	// camera.position.set( 0, 20, 100 );
 	camera.position.z = 5;
+	controls.update();
 
 	//--------------------------Adding the Start Screen--------------------------//
 	// var blocker = document.getElementById( 'blocker' );
@@ -71,7 +88,7 @@ function init() {
 	// scene.add( controls.getObject() );
 
 	//--------------------------Loading the Background Image--------------------------//
-	loader.load('public/darkgrid.jpg', function(texture){
+	loader.load('public/3.png', function(texture){
 		var cubeGeom = new THREE.BoxGeometry(90, 90, 90);
 		var cubeMat = new THREE.MeshBasicMaterial({
 			map: texture,
@@ -105,10 +122,9 @@ function init() {
 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
 
-
-	// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+	renderer.domElement.addEventListener("click", onclick, false)
 
 
 }
@@ -132,7 +148,7 @@ function onDocumentMouseDown( event ) {
 
 	raycaster.setFromCamera( mouse, camera );
 
-	var intersects = raycaster.intersectObjects( objects );
+	var intersects = raycaster.intersectObjects( objects, true );
 
 	// if ( intersects.length > 0 ) {
 	// 	intersects[ 0 ].object.material.color.setHex( 0x7d00fd );
@@ -152,7 +168,9 @@ function onDocumentMouseDown( event ) {
 			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 			// set a new color for closest object
 			INTERSECTED.material.color.setHex( 0x7d00fd );
+
 		}
+
 	}
 	else // there are no intersections
 	{
@@ -166,6 +184,18 @@ function onDocumentMouseDown( event ) {
 
 }
 
+function onclick(event) {
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects(objects, true);
+	if (intersects.length > 0) {
+		selectedObject = intersects[0].object;
+		alert(selectedObject.color + " object selected!");
+	}
+}
+
 
 function animate() {
 
@@ -176,6 +206,8 @@ function animate() {
 
 
 function render() {
+
+	controls.update();
 
 	renderer.render( scene, camera );
 
