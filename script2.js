@@ -1,6 +1,8 @@
 var camera, scene, renderer, controls, raycaster;
 var cube, container, selectedObject;
 
+var popup;
+
 var  mouse, INTERSECTED;
 
 var objects = [];
@@ -187,6 +189,8 @@ function onDocumentMouseDown( event ) {
 function onclick(event) {
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+	popup = document.getElementById( 'popup' );
 
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(objects, true);
