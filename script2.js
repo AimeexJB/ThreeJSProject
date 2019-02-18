@@ -1,8 +1,6 @@
 var camera, scene, renderer, controls, raycaster;
 var cube, container, selectedObject;
 
-var popup;
-
 var  mouse, INTERSECTED;
 
 var objects = [];
@@ -15,17 +13,17 @@ animate();
 function init() {
 
 	//--------------------------Adding text to screen--------------------------//
-	container = document.createElement( 'div' );
-	document.body.appendChild( container );
-
-	var info = document.createElement( 'div' );
-	info.style.position = 'absolute';
-	info.style.top = '20px';
-	info.style.color = 'white'
-	info.style.width = '100%';
-	info.style.textAlign = 'center';
-	info.innerHTML = 'Interactive Cubes';
-	container.appendChild( info );
+	// container = document.createElement( 'div' );
+	// document.body.appendChild( container );
+	//
+	// var info = document.createElement( 'div' );
+	// info.style.position = 'absolute';
+	// info.style.top = '20px';
+	// info.style.color = 'white'
+	// info.style.width = '100%';
+	// info.style.textAlign = 'center';
+	// info.innerHTML = 'Interactive Cubes';
+	// container.appendChild( info );
 
 	//--------------------------Creating Scene--------------------------//
 	scene = new THREE.Scene();
@@ -103,14 +101,18 @@ function init() {
 	})
 
 	//--------------------------Adding the Cubes to the Scene--------------------------//
-	for (var i = 0; i < 1500; i++){
-		var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+	for (var i = 0; i < 1000; i++){
+		if (i <= 20) {
+			var geometry = new THREE.BoxGeometry( 5, 5, 5 );
+		} else {
+			var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
+		}
+
 		var material = new THREE.MeshLambertMaterial();
-		//var material = new THREE.MeshBasicMaterial();
 		cube = new THREE.Mesh( geometry, material );
-		cube.position.z = (Math.random()* 100) - 50;
-		cube.position.x = (Math.random()* 100) - 50;
-		cube.position.y = (Math.random()* 100) - 50;
+		cube.position.z = (Math.random()* 80) - 40;
+		cube.position.x = (Math.random()* 80) - 40;
+		cube.position.y = (Math.random()* 80) - 40;
 		scene.add( cube );
 		objects.push( cube );
 	}
@@ -152,10 +154,6 @@ function onDocumentMouseDown( event ) {
 
 	var intersects = raycaster.intersectObjects( objects, true );
 
-	// if ( intersects.length > 0 ) {
-	// 	intersects[ 0 ].object.material.color.setHex( 0x7d00fd );
-	// }
-
 	if ( intersects.length > 0 )
 	{
 		// if the closest object intersected is not the currently stored intersection object
@@ -180,23 +178,38 @@ function onDocumentMouseDown( event ) {
 		if ( INTERSECTED )
 			INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 		// remove previous intersection object reference
-		//     by setting current intersection object to "nothing"
+		// by setting current intersection object to "nothing"
 		INTERSECTED = null;
 	}
 
 }
 
+
 function onclick(event) {
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-	popup = document.getElementById( 'popup' );
 
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(objects, true);
 	if (intersects.length > 0) {
 		selectedObject = intersects[0].object;
-		alert(selectedObject.color + " object selected!");
+
+		// alert(selectedObject.color + " object selected!");
+
+		container = document.createElement( 'div' );
+		container.setAttribute("class", "container");
+		document.body.appendChild( container );
+
+		var boxinfo = document.createElement( 'div' );
+		boxinfo.setAttribute("class", "modal");
+		boxinfo.style.color = 'black'
+
+		boxinfo.innerHTML = intersects[0].object.id;
+		container.appendChild( boxinfo );
+
+	}
+	else {
+		container.remove(boxinfo)
 	}
 }
 
