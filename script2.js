@@ -5,6 +5,7 @@ var  mouse, INTERSECTED;
 
 var objects = [];
 
+
 var loader = new THREE.TextureLoader();
 
 init();
@@ -13,17 +14,17 @@ animate();
 function init() {
 
 	//--------------------------Adding text to screen--------------------------//
-	// container = document.createElement( 'div' );
-	// document.body.appendChild( container );
-	//
-	// var info = document.createElement( 'div' );
-	// info.style.position = 'absolute';
-	// info.style.top = '20px';
-	// info.style.color = 'white'
-	// info.style.width = '100%';
-	// info.style.textAlign = 'center';
-	// info.innerHTML = 'Interactive Cubes';
-	// container.appendChild( info );
+	container = document.createElement( 'div' );
+	document.body.appendChild( container );
+
+	var info = document.createElement( 'div' );
+	info.style.position = 'absolute';
+	info.style.top = '20px';
+	info.style.color = 'white'
+	info.style.width = '100%';
+	info.style.textAlign = 'center';
+	info.innerHTML = 'Interactive Museum';
+	container.appendChild( info );
 
 	//--------------------------Creating Scene--------------------------//
 	scene = new THREE.Scene();
@@ -196,6 +197,8 @@ function onclick(event) {
 
 		// alert(selectedObject.color + " object selected!");
 
+		objects[20].name = "Aimee"
+
 		container = document.createElement( 'div' );
 		container.setAttribute("class", "container");
 		document.body.appendChild( container );
@@ -204,7 +207,7 @@ function onclick(event) {
 		boxinfo.setAttribute("class", "modal");
 		boxinfo.style.color = 'black'
 
-		boxinfo.innerHTML = intersects[0].object.id;
+		boxinfo.innerHTML = intersects[0].object.name;
 		container.appendChild( boxinfo );
 
 	}
