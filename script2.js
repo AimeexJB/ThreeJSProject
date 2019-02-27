@@ -5,6 +5,10 @@ var  mouse, INTERSECTED;
 
 var objects = [];
 
+var songs = [{"title": "Zen Zen Zense", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Fergus Sucks", "description": "Song from Your Name movie 0/10 would listen to"},
+			{"title": "Lol JK", "description": "Song from Your Name movie 6/10 would listen to"}]
+
 
 var loader = new THREE.TextureLoader();
 
@@ -120,9 +124,9 @@ function init() {
 
 	//--------------------------Adding The lighting effects--------------------------//
 
-	var light = new THREE.PointLight(0xffffff, 20, 100);
-	light.position.set(30,0,0);
-	scene.add(light);
+	// var light = new THREE.PointLight(0xffffff, 20, 100);
+	// light.position.set(30,0,0);
+	// scene.add(light);
 
 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
@@ -197,7 +201,12 @@ function onclick(event) {
 
 		// alert(selectedObject.color + " object selected!");
 
-		objects[20].name = "Aimee"
+		objects[20].name = "Song 1"
+		objects[10].name = "Song 2"
+		objects[11].name = "Song 3"
+		objects[12].name = "Song 4"
+		objects[13].name = "Song 5"
+		objects[14].name = "Song 6"
 
 		container = document.createElement( 'div' );
 		container.setAttribute("class", "container");
@@ -208,6 +217,9 @@ function onclick(event) {
 		boxinfo.style.color = 'black'
 
 		boxinfo.innerHTML = intersects[0].object.name;
+		// boxinfo.innerHTML = songs[object.id -17].title;
+		// boxinfo.innerHTML = songs[object.id -17].description;
+		// console.log(songs[object.id -17].title);
 		container.appendChild( boxinfo );
 
 	}
