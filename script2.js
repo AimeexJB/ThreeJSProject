@@ -5,26 +5,26 @@ var  mouse, INTERSECTED;
 
 var objects = [];
 
-var songs = [{"title": "Song 1", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 2", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 4", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 5", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 6", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 7", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 8", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 9", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 10", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 11", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 12", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 13", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 14", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 15", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Song 16", "description": "Song from Your Name movie 0/10 would listen to"},
-			{"title": "Song 17", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Song 18", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Song 19", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Song 20", "description": "Song from Your Name movie 6/10 would listen to"}]
+var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "description": "10/10 would listen to"},
+			{"title": "Imagine - John Lennon", "description": "10/10 would listen to"},
+			{"title": "One - U2", "description": "10/10 would listen to"},
+			{"title": "Billie Jean - Michael Jackson", "description": "10/10 would listen to"},
+			{"title": "Bohemian Rhapsody - Queen", "description": "10/10 would listen to"},
+			{"title": "Hey Jude - The Beatles", "description": "10/10 would listen to"},
+			{"title": "I Can't Get No Satisfaction - Rolling Stones", "description": "10/10 would listen to"},
+			{"title": "Sweet Child O'Mine - Guns N' Roses", "description": "10/10 would listen to"},
+			{"title": "London Calling - The Clash", "description": "10/10 would listen to"},
+			{"title": "Hotel California - The Eagles", "description": "10/10 would listen to"},
+			{"title": "Your Song - Elton John", "description": "10/10 would listen to"},
+			{"title": "Stairway To Heaven - Led Zeppelin", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "I Will Always Love You - Whitney Houston", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Heartbreak Hotel - Elvis Presley", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Over The Rainbow - Judy Garland", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "What's Goin' On - Marvin Gaye", "description": "Song from Your Name movie 0/10 would listen to"},
+			{"title": "Creep - Radiohead", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Respect - Aretha Franklin", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Dancing Queen - ABBA", "description": "Song from Your Name movie 6/10 would listen to"}];
 
 
 var loader = new THREE.TextureLoader();
@@ -39,12 +39,12 @@ function init() {
 	document.body.appendChild( container );
 
 	var info = document.createElement( 'div' );
-	info.style.position = 'absolute';
-	info.style.top = '20px';
-	info.style.color = 'white'
-	info.style.width = '100%';
-	info.style.textAlign = 'center';
-	info.innerHTML = 'Interactive Museum';
+		info.style.position = 'absolute';
+		info.style.top = '20px';
+		info.style.color = 'white'
+		info.style.width = '100%';
+		info.style.textAlign = 'center';
+		info.innerHTML = 'Interactive Museum';
 	container.appendChild( info );
 
 	//--------------------------Creating Scene--------------------------//
@@ -213,6 +213,7 @@ function onclick(event) {
 
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(objects, true);
+
 	if (intersects.length > 0) {
 		selectedObject = intersects[0].object;
 
@@ -223,13 +224,17 @@ function onclick(event) {
 		document.body.appendChild( container );
 
 		var boxinfo = document.createElement( 'div' );
-		boxinfo.setAttribute("class", "modal");
-		boxinfo.style.color = 'black'
+		var songTitle = document.createElement( 'h3' );
+		var songInfo = document.createElement( 'p' );
+			boxinfo.appendChild( songTitle );
+			boxinfo.appendChild( songInfo );
+			boxinfo.setAttribute("class", "modal");
+			boxinfo.style.color = 'black'
 
-		// boxinfo.innerHTML = intersects[0].object.name;
-		boxinfo.innerHTML = songs[intersects[0].object.id -8].title;
-		boxinfo.innerHTML = songs[intersects[0].object.id -8].description;
-		container.appendChild( boxinfo );
+			// boxinfo.innerHTML = intersects[0].object.name;
+			songTitle.innerHTML = songs[intersects[0].object.id -8].title;
+			songInfo.innerHTML = songs[intersects[0].object.id -8].description;
+			container.appendChild( boxinfo );
 
 	}
 	else {
