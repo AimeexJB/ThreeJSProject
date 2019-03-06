@@ -1,30 +1,30 @@
 var camera, scene, renderer, controls, raycaster;
-var cube, container, selectedObject;
+var cube, container, selectedObject, sound;
 
 var  mouse, INTERSECTED;
 
 var objects = [];
 
-var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "description": "10/10 would listen to"},
-			{"title": "Imagine - John Lennon", "description": "10/10 would listen to"},
-			{"title": "One - U2", "description": "10/10 would listen to"},
-			{"title": "Billie Jean - Michael Jackson", "description": "10/10 would listen to"},
-			{"title": "Bohemian Rhapsody - Queen", "description": "10/10 would listen to"},
-			{"title": "Hey Jude - The Beatles", "description": "10/10 would listen to"},
-			{"title": "I Can't Get No Satisfaction - Rolling Stones", "description": "10/10 would listen to"},
-			{"title": "Sweet Child O'Mine - Guns N' Roses", "description": "10/10 would listen to"},
-			{"title": "London Calling - The Clash", "description": "10/10 would listen to"},
-			{"title": "Hotel California - The Eagles", "description": "10/10 would listen to"},
-			{"title": "Your Song - Elton John", "description": "10/10 would listen to"},
-			{"title": "Stairway To Heaven - Led Zeppelin", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "I Will Always Love You - Whitney Houston", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Heartbreak Hotel - Elvis Presley", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Over The Rainbow - Judy Garland", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "What's Goin' On - Marvin Gaye", "description": "Song from Your Name movie 0/10 would listen to"},
-			{"title": "Creep - Radiohead", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Respect - Aretha Franklin", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Dancing Queen - ABBA", "description": "Song from Your Name movie 6/10 would listen to"}];
+var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Imagine - John Lennon", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "One - U2", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Billie Jean - Michael Jackson", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Bohemian Rhapsody - Queen", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Hey Jude - The Beatles", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "I Can't Get No Satisfaction - Rolling Stones", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Sweet Child O'Mine - Guns N' Roses", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "London Calling - The Clash", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Hotel California - The Eagles", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Your Song - Elton John", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Stairway To Heaven - Led Zeppelin", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "I Will Always Love You - Whitney Houston", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Heartbreak Hotel - Elvis Presley", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Over The Rainbow - Judy Garland", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "What's Goin' On - Marvin Gaye", "source": "music/song.mp3", "description": "Song from Your Name movie 0/10 would listen to"},
+			{"title": "Creep - Radiohead", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Respect - Aretha Franklin", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+			{"title": "Dancing Queen - ABBA", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"}];
 
 
 var loader = new THREE.TextureLoader();
@@ -53,23 +53,19 @@ function init() {
 	// camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 
 	//--------------------------Adding Audio--------------------------//
-	// var listener = new THREE.AudioListener();
-	// camera.add( listener );
-	//
-	// var sound = new THREE.Audio( listener );
-	//
-	// var audioLoader = new THREE.AudioLoader();
-	// 	audioLoader.load( 'music/song.mp3', function( buffer ) {
-	// 		sound.setBuffer( buffer );
-	// 		sound.play();
-	// 	});
-	//
-	// var sphere = new THREE.SphereGeometry( 0.5, 0.5, 0.5 );
-	// var material = new THREE.MeshPhongMaterial( { color: 0xff2200 } );
-	// var mesh = new THREE.Mesh( sphere, material );
-	// scene.add( mesh );
+	var listener = new THREE.AudioListener();
+	camera.add( listener );
 
-	// mesh.add( sound );
+	sound = new THREE.PositionalAudio( listener );
+
+	var audioLoader = new THREE.AudioLoader();
+		audioLoader.load( 'music/song.mp3', function( buffer ) {
+			sound.setBuffer( buffer );
+			sound.setRefDistance( 20 );
+			sound.hasPlaybackControl = true;
+			sound.isPlaying = false;
+			// sound.play();
+		});
 
 	//--------------------------Adding Raycasting--------------------------//
 	raycaster = new THREE.Raycaster();
@@ -137,6 +133,8 @@ function init() {
 		cube.position.y = (Math.random()* 80) - 40;
 		scene.add( cube );
 		objects.push( cube );
+
+		// cube.add(sound);
 	}
 
 	//--------------------------Adding The lighting effects--------------------------//
@@ -225,14 +223,17 @@ function onclick(event) {
 
 		var boxinfo = document.createElement( 'div' );
 		var songTitle = document.createElement( 'h3' );
+		var songAudio = document.getElementById( 'myAudio' );
 		var songInfo = document.createElement( 'p' );
 			boxinfo.appendChild( songTitle );
+			boxinfo.appendChild( songAudio );
 			boxinfo.appendChild( songInfo );
 			boxinfo.setAttribute("class", "modal");
 			boxinfo.style.color = 'black'
 
 			// boxinfo.innerHTML = intersects[0].object.name;
 			songTitle.innerHTML = songs[intersects[0].object.id -8].title;
+			songAudio.innerHTML = songs[intersects[0].object.id -8].source;
 			songInfo.innerHTML = songs[intersects[0].object.id -8].description;
 			container.appendChild( boxinfo );
 
