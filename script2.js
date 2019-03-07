@@ -5,6 +5,8 @@ var  mouse, INTERSECTED;
 
 var objects = [];
 
+var loader = new THREE.TextureLoader();
+
 var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/song.mp3", "description": "10/10 would listen to"},
 			{"title": "Imagine - John Lennon", "source": "music/song.mp3", "description": "10/10 would listen to"},
 			{"title": "One - U2", "source": "music/song.mp3", "description": "10/10 would listen to"},
@@ -27,8 +29,6 @@ var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/son
 			{"title": "Dancing Queen - ABBA", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"}];
 
 
-var loader = new THREE.TextureLoader();
-
 init();
 animate();
 
@@ -50,22 +50,6 @@ function init() {
 	//--------------------------Creating Scene--------------------------//
 	scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 60, window.innerWidth/window.innerHeight, 0.1, 100);
-	// camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-
-	//--------------------------Adding Audio--------------------------//
-	var listener = new THREE.AudioListener();
-	camera.add( listener );
-
-	sound = new THREE.PositionalAudio( listener );
-
-	var audioLoader = new THREE.AudioLoader();
-		audioLoader.load( 'music/song.mp3', function( buffer ) {
-			sound.setBuffer( buffer );
-			sound.setRefDistance( 20 );
-			sound.hasPlaybackControl = true;
-			sound.isPlaying = false;
-			// sound.play();
-		});
 
 	//--------------------------Adding Raycasting--------------------------//
 	raycaster = new THREE.Raycaster();
@@ -76,6 +60,7 @@ function init() {
 	renderer.setPixelRatio( window.devicePixelRatio)
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
+	// renderer.vr.enabled = true;
 
 	//--------------------------Adding the Controls to move--------------------------//
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -134,14 +119,9 @@ function init() {
 		scene.add( cube );
 		objects.push( cube );
 
-		// cube.add(sound);
 	}
 
 	//--------------------------Adding The lighting effects--------------------------//
-
-	// var light = new THREE.PointLight(0xffffff, 20, 100);
-	// light.position.set(30,0,0);
-	// scene.add(light);
 
 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
@@ -149,6 +129,8 @@ function init() {
 	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 	renderer.domElement.addEventListener("click", onclick, false)
+
+	// document.body.appendChild( WEBVR.createButton( renderer ) );
 
 
 }
@@ -215,8 +197,6 @@ function onclick(event) {
 	if (intersects.length > 0) {
 		selectedObject = intersects[0].object;
 
-		// objects[18].name = songs[0].title
-
 		container = document.createElement( 'div' );
 		container.setAttribute("class", "container");
 		document.body.appendChild( container );
@@ -230,21 +210,26 @@ function onclick(event) {
 			boxinfo.appendChild( songInfo );
 			boxinfo.setAttribute("class", "modal");
 			boxinfo.style.color = 'black'
+			songAudio.setAttribute("style", "display:block");
 
-			// boxinfo.innerHTML = intersects[0].object.name;
-			songTitle.innerHTML = songs[intersects[0].object.id -8].title;
-			songAudio.innerHTML = songs[intersects[0].object.id -8].source;
-			songInfo.innerHTML = songs[intersects[0].object.id -8].description;
+			songTitle.innerHTML = songs[intersects[0].object.id -10].title;
+			songAudio.innerHTML = songs[intersects[0].object.id -10].source;
+			songInfo.innerHTML = songs[intersects[0].object.id -10].description;
 			container.appendChild( boxinfo );
 
 	}
 	else {
+		var songAudio = document.getElementById( 'myAudio' );
+		document.body.appendChild( songAudio );
+		songAudio.setAttribute("style", "display:none");
 		container.remove(boxinfo)
+
 	}
 }
 
-
 function animate() {
+
+	// renderer.setAnimationLoop( render );
 
 	requestAnimationFrame( animate );
 
@@ -258,4 +243,4 @@ function render() {
 
 	renderer.render( scene, camera );
 
-}
+};

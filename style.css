@@ -24,3 +24,7 @@ body{
     display:block;
     border-radius: 15px;
 }
+
+#myAudio {
+    margin-left: 100px;
+}
