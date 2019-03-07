@@ -7,22 +7,22 @@ var objects = [];
 
 var loader = new THREE.TextureLoader();
 
-var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Imagine - John Lennon", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "One - U2", "source": "music/song.mp3", "description": "10/10 would listen to"},
+var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/song2.mp3", "description": "10/10 would listen to"},
+			{"title": "Imagine - John Lennon", "source": "music/song2.mp3", "description": "10/10 would listen to"},
+			{"title": "One - U2", "source": "music/song2.mp3", "description": "10/10 would listen to"},
 			{"title": "Billie Jean - Michael Jackson", "source": "music/song.mp3", "description": "10/10 would listen to"},
 			{"title": "Bohemian Rhapsody - Queen", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Hey Jude - The Beatles", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Hey Jude - The Beatles", "source": "music/song2.mp3", "description": "10/10 would listen to"},
 			{"title": "I Can't Get No Satisfaction - Rolling Stones", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Sweet Child O'Mine - Guns N' Roses", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "London Calling - The Clash", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Hotel California - The Eagles", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Your Song - Elton John", "source": "music/song.mp3", "description": "10/10 would listen to"},
+			{"title": "Sweet Child O'Mine - Guns N' Roses", "source": "music/song2.mp3", "description": "10/10 would listen to"},
+			{"title": "London Calling - The Clash", "source": "music/song2.mp3", "description": "10/10 would listen to"},
+			{"title": "Hotel California - The Eagles", "source": "music/song2.mp3", "description": "10/10 would listen to"},
+			{"title": "Your Song - Elton John", "source": "music/song2.mp3", "description": "10/10 would listen to"},
 			{"title": "Stairway To Heaven - Led Zeppelin", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
 			{"title": "I Will Always Love You - Whitney Houston", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Heartbreak Hotel - Elvis Presley", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+			{"title": "Heartbreak Hotel - Elvis Presley", "source": "music/song2.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
 			{"title": "Over The Rainbow - Judy Garland", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "What's Goin' On - Marvin Gaye", "source": "music/song.mp3", "description": "Song from Your Name movie 0/10 would listen to"},
+			{"title": "What's Goin' On - Marvin Gaye", "source": "music/song2.mp3", "description": "Song from Your Name movie 0/10 would listen to"},
 			{"title": "Creep - Radiohead", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
 			{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
 			{"title": "Respect - Aretha Franklin", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
@@ -213,7 +213,11 @@ function onclick(event) {
 			songAudio.setAttribute("style", "display:block");
 
 			songTitle.innerHTML = songs[intersects[0].object.id -10].title;
-			songAudio.innerHTML = songs[intersects[0].object.id -10].source;
+			// songAudio.innerHTML = songs[intersects[0].object.id -10].source;
+			// songAudio.appendChild('source').setAttribute("src", songs[intersects[0].object.id -10].source );
+			var source = document.createElement( 'source' );
+			songAudio.appendChild( source );
+			source.setAttribute("src", songs[intersects[0].object.id -10].source );
 			songInfo.innerHTML = songs[intersects[0].object.id -10].description;
 			container.appendChild( boxinfo );
 
