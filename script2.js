@@ -14,26 +14,26 @@ var objects = [];
 
 var loader = new THREE.TextureLoader();
 
-var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "Imagine - John Lennon", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "One - U2", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "Billie Jean - Michael Jackson", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Bohemian Rhapsody - Queen", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Hey Jude - The Beatles", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "I Can't Get No Satisfaction - Rolling Stones", "source": "music/song.mp3", "description": "10/10 would listen to"},
-			{"title": "Sweet Child O'Mine - Guns N' Roses", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "London Calling - The Clash", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "Hotel California - The Eagles", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "Your Song - Elton John", "source": "music/song2.mp3", "description": "10/10 would listen to"},
-			{"title": "Stairway To Heaven - Led Zeppelin", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "I Will Always Love You - Whitney Houston", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Heartbreak Hotel - Elvis Presley", "source": "music/song2.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "Over The Rainbow - Judy Garland", "source": "music/song.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
-			{"title": "What's Goin' On - Marvin Gaye", "source": "music/song2.mp3", "description": "Song from Your Name movie 0/10 would listen to"},
-			{"title": "Creep - Radiohead", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Respect - Aretha Franklin", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
-			{"title": "Dancing Queen - ABBA", "source": "music/song.mp3", "description": "Song from Your Name movie 6/10 would listen to"}];
+var songs = [{"title": "Smells Like Teen Spirit - Nirvana", "source": "music/SmellsLikeTeenSpirit.mp3", "description": "10/10 would listen to"},
+						{"title": "Imagine - John Lennon", "source": "music/Imagine.mp3", "description": "10/10 would listen to"},
+						{"title": "One - U2", "source": "music/One.mp3", "description": "10/10 would listen to"},
+						{"title": "Billie Jean - Michael Jackson", "source": "music/BillieJean.mp3", "description": "10/10 would listen to"},
+						{"title": "Bohemian Rhapsody - Queen", "source": "music/BohemianRhapsody.mp3", "description": "10/10 would listen to"},
+						{"title": "Hey Jude - The Beatles", "source": "music/HeyJude.mp3", "description": "10/10 would listen to"},
+						{"title": "I Can't Get No Satisfaction - Rolling Stones", "source": "music/ICantGetNo.mp3", "description": "10/10 would listen to"},
+						{"title": "Sweet Child O'Mine - Guns N' Roses", "source": "music/SweetChildMine.mp3", "description": "10/10 would listen to"},
+						{"title": "London Calling - The Clash", "source": "music/LondonCalling.mp3", "description": "10/10 would listen to"},
+						{"title": "Hotel California - The Eagles", "source": "music/HotelCalifornia.mp3", "description": "10/10 would listen to"},
+						{"title": "Your Song - Elton John", "source": "music/YourSong.mp3", "description": "10/10 would listen to"},
+						{"title": "Stairway To Heaven - Led Zeppelin", "source": "music/StairwayToHeaven.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+						{"title": "I Will Always Love You - Whitney Houston", "source": "music/IWillAlwaysLoveYou.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+						{"title": "Heartbreak Hotel - Elvis Presley", "source": "music/HeartbreakHotel.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+						{"title": "Over The Rainbow - Judy Garland", "source": "music/OverTheRainbow.mp3", "description": "Song from Your Name movie 10/10 would listen to"},
+						{"title": "What's Goin' On - Marvin Gaye", "source": "music/WhatsGoinOn.mp3", "description": "Song from Your Name movie 0/10 would listen to"},
+						{"title": "Creep - Radiohead", "source": "music/Creep.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+						{"title": "Bridge Over Troubled Water - Simon & Garfunkel", "source": "music/BridgeOverTroubledWater.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+						{"title": "Respect - Aretha Franklin", "source": "music/Respect.mp3", "description": "Song from Your Name movie 6/10 would listen to"},
+						{"title": "Dancing Queen - ABBA", "source": "music/DancingQueen.mp3", "description": "Song from Your Name movie 6/10 would listen to"}];
 
 
 init();
@@ -67,8 +67,8 @@ function init() {
 	renderer.setPixelRatio( window.devicePixelRatio)
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
-	
-	// renderer.vr.enabled = true;
+
+	renderer.vr.enabled = true;
 
 	//--------------------------Adding the Controls to move--------------------------//
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -169,7 +169,7 @@ function init() {
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 	renderer.domElement.addEventListener("click", onclick, false)
 
-	// document.body.appendChild( WEBVR.createButton( renderer ) );
+	document.body.appendChild( WEBVR.createButton( renderer ) );
 
 
 
@@ -254,7 +254,6 @@ function onclick(event) {
 
 			songTitle.innerHTML = songs[intersects[0].object.id -10].title;
 
-			// songAudio.innerHTML = songs[intersects[0].object.id -10].source;
 			var source = document.createElement( 'source' );
 			songAudio.appendChild( source );
 			source.setAttribute("src", songs[intersects[0].object.id -10].source );
@@ -266,7 +265,8 @@ function onclick(event) {
 	else {
 		var songAudio = document.getElementById( 'myAudio' );
 		document.body.appendChild( songAudio );
-		songAudio.setAttribute("style", "display:none");
+		songAudio.setAttribute( "style", "display:none" );
+
 		container.remove(boxinfo)
 
 	}
@@ -359,7 +359,7 @@ function onclick(event) {
 
 function animate() {
 
-	// renderer.setAnimationLoop( render );
+	renderer.setAnimationLoop( render );
 
 	requestAnimationFrame( animate );
 
