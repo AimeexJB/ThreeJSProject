@@ -268,6 +268,10 @@ function onclick(event) {
 		// songAudio.removeChild( source );
 		songAudio.setAttribute( "style", "display:none" );
 
+		// boxinfo.removeChild( songTitle );
+		// boxinfo.removeChild( songAudio );
+		// boxinfo.removeChild( songInfo );
+
 		container.remove(boxinfo)
 
 	}
