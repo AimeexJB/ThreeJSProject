@@ -5,7 +5,7 @@ var  mouse, INTERSECTED;
 
 var objects = [];
 
-//
+//VR
 // var intersected = [];
 // var controller1,  controller2;
 // var group;
@@ -68,6 +68,7 @@ function init() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 
+	//VR
 	// renderer.vr.enabled = true;
 
 	//--------------------------Adding the Controls to move--------------------------//
@@ -76,7 +77,7 @@ function init() {
 	camera.position.z = 5;
 	controls.update();
 
-	//
+	//VR
 	// group = new THREE.Group();
 	// scene.add( group );
 	//
@@ -131,7 +132,8 @@ function init() {
 		cube.position.y = (Math.random()* 80) - 40;
 		scene.add( cube );
 		objects.push( cube );
-		//
+
+		//VR
 		// group.add( cube );
 		//
 
@@ -168,7 +170,10 @@ function init() {
 	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 	renderer.domElement.addEventListener("click", onclick, false)
+	window.addEventListener( 'resize', onWindowResize, false );
 
+
+	//VR
 	// document.body.appendChild( WEBVR.createButton( renderer ) );
 
 
@@ -278,7 +283,7 @@ function onclick(event) {
 }
 
 //
-
+//VR CONTROLLER
 // function onSelectStart( event ) {
 //
 // 	var controller = event.target;
@@ -360,10 +365,19 @@ function onclick(event) {
 
 //
 
+function onWindowResize(){
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
 
 
 function animate() {
 
+	//VR
 	// renderer.setAnimationLoop( render );
 
 	requestAnimationFrame( animate );
@@ -376,7 +390,7 @@ function render() {
 
 	controls.update();
 
-	//
+	//VR CONTROLLER
 	// cleanIntersected();
 	// intersectObjects( controller1 );
 	// intersectObjects( controller2 );
